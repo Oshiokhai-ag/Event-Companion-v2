@@ -1,0 +1,9 @@
+{
+  "name": "Companion",
+  "description": "Find like-minded people to attend events with through a swipe-based discovery feed and organizer-controlled approval system.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

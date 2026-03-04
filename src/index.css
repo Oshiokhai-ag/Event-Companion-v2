@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-sunstone: #E07A5F;
+  --color-sunstone-dark: #C4674D;
+  --color-obsidian: #1A1E24;
+  --color-lava: #2D333B;
+  --color-lava-light: #363D47;
+  --color-alabaster: #F4F1EA;
+  --color-grey-mist: #8E95A3;
+  --color-verdant: #3A7B70;
+  --color-ember: #C25E5E;
+  --color-solar: #F4B740;
+}
+
+@layer base {
+  html, body, #root {
+    @apply h-full overflow-hidden flex flex-col;
+  }
+  
+  body {
+    @apply bg-obsidian text-alabaster font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-lava/40 backdrop-blur-xl border border-white/5;
+  }
+  
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/10 before:to-transparent;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
