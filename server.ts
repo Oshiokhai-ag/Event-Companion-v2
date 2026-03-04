@@ -13,6 +13,20 @@ import rateLimit from 'express-rate-limit';
 import cron from 'node-cron';
 import db, { initDb } from "./src/db.ts";
 
+// ─── Environment Validation ──────────────────────────────────────────────────
+const REQUIRED_ENV = [
+  'JWT_SECRET',
+  'CLOUDINARY_CLOUD_NAME',
+  'CLOUDINARY_API_KEY',
+  'CLOUDINARY_API_SECRET'
+];
+
+for (const env of REQUIRED_ENV) {
+  if (!process.env[env] && process.env.NODE_ENV === 'production') {
+    console.warn(`⚠️  Missing environment variable: ${env}`);
+  }
+}
+
 // ─── Database Initialisation ─────────────────────────────────────────────────
 let dbReady = false;
 
@@ -532,8 +546,13 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    app.use(express.static("dist"));
-    app.get("*", (req, res) => res.sendFile(path.resolve("dist/index.html")));
+    const distPath = path.resolve("dist");
+    app.use(express.static(distPath));
+    app.get("*", (req, res) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(distPath, "index.html"));
+      }
+    });
   }
 
     const PORT = 3000;
